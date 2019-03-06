@@ -5,3 +5,4 @@ do
 let "ans=ans+param"
 done
 echo "$(($ans/$#))"
+echo "number of arguments $#"
