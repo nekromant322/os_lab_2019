@@ -10,6 +10,4 @@ void RevertString(char *str)
 	    str[strlen(str)-i-1] = temp;
 	}
 }
-//gcc -shared RevertString.o -o libdyn.so
-//gcc main.o -L -ldyn -o shared-library
-//gcc -o test tests/tests.c -lcunit -L
+

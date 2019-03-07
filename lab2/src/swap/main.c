@@ -1,9 +1,10 @@
 #include <stdio.h>
 
-#include "swap.h"
+#include "swap.c"
 
 int main()
 {
+    printf("test");
 	char ch1 = 'a';
 	char ch2 = 'b';
 
