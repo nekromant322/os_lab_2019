@@ -39,26 +39,31 @@ int main(int argc, char **argv) {
 
     if (c == -1) break;
 
-    switch (c) {
+    switch (c) 
+    {
       case 0:
-        switch (option_index) {
+        switch (option_index)
+        {
           case 0:
             seed = atoi(optarg);
-            if (seed <= 0) {
+            if (seed <= 0) 
+            {
                 printf("seed is a positive number\n");
                 return 1;
             }
             break;
           case 1:
             array_size = atoi(optarg);
-            if (array_size <= 0) {
+            if (array_size <= 0)
+            {
                 printf("array_size is a positive number\n");
                 return 1;
             }
             break;
           case 2:
             thread_num = atoi(optarg);
-            if (thread_num <= 0) {
+            if (thread_num <= 0) 
+            {
                 printf("thread_num is a positive number\n");
                 return 1;
             }
@@ -76,12 +81,14 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (optind < argc) {
+  if (optind < argc) 
+  {
     printf("Has at least one no option argument\n");
     return 1;
   }
     
-  if (seed == 0 || array_size == 0 || thread_num == 0) {
+  if (seed == 0 || array_size == 0 || thread_num == 0) 
+  {
     printf("Usage: %s --seed \"num\" --array_size \"num\" --thread_num \"num\" \n",
            argv[0]);
     return 1;
@@ -93,31 +100,47 @@ int main(int argc, char **argv) {
    * your code here
    * Generate array here
    */
+   
+
+  
   int *array = malloc(sizeof(int) * array_size);
   GenerateArray(array, array_size, seed);
+  struct timeval start_time;
+  gettimeofday(&start_time, NULL);
   struct SumArgs args[thread_num];
   int part = array_size/thread_num;
-  for (int i=0; i<thread_num; i++){
+  for (int i=0; i<thread_num; i++)
+  {
     args[i].begin = i*part;
     args[i].end = (i == thread_num) ? array_size : (i + 1) * part;
     args[i].array = array;  
   }
-  for (uint32_t i = 0; i < thread_num; i++) {
+  for (uint32_t i = 0; i < thread_num; i++) 
+  {
     
-    if (pthread_create(&threads[i], NULL, ThreadSum, (void *)&args)) {
+    if (pthread_create(&threads[i], NULL, ThreadSum, (void *)&args)) 
+    {
       printf("Error: pthread_create failed!\n");
       return 1;
     }
   }
 
   int total_sum = 0;
-  for (uint32_t i = 0; i < thread_num; i++) {
+  for (uint32_t i = 0; i < thread_num; i++) 
+  {
     int sum = 0;
     pthread_join(threads[i], (void **)&sum);
     total_sum += sum;
   }
-
+  struct timeval finish_time;
+  gettimeofday(&finish_time, NULL);
   free(array);
   printf("Total: %d\n", total_sum);
+  
+
+  double elapsed_time = (finish_time.tv_usec - start_time.tv_usec) / 1000.0;
+  
+  printf("Elapsed Time: %fms\n", elapsed_time);
   return 0;
 }
+//./parallel_sum --seed 10 --array_size 100000000 --thread_num 2

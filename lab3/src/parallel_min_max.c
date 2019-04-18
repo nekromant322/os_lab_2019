@@ -156,7 +156,7 @@ int main(int argc, char **argv) {
     if (minMaxBuff.max > min_max.max) 
         min_max.max = minMaxBuff.max;
   }
-  
+ 
   struct timeval finish_time;
   gettimeofday(&finish_time, NULL);
 
