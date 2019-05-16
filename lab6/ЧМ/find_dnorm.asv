@@ -1,0 +1,5 @@
+function y = find_dnorm(a, b, method)
+
+if (length(a) ~= length(b))
+	error(Size of [f] = %d and not equal to N = %d', length(a), N);)
+end
